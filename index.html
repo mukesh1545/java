@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Currency Converter</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Currency Converter</h1>
+    <input type="number" id="amount" placeholder="Enter amount" />
+    <select id="from">
+        <option value="USD">USD</option>
+        <!-- Add other currency options here -->
+    </select>
+    <select id="to">
+        <option value="INR">INR</option>
+        <!-- Add other currency options here -->
+    </select>
+    <button onclick="convertCurrency()">Convert</button>
+    <div id="result"></div>
+
+    <script>
+        function convertCurrency() {
+            var amount = document.getElementById("amount").value;
+            var fromCurrency = document.getElementById("from").value;
+            var toCurrency = document.getElementById("to").value;
+
+            $.ajax({
+                type: "GET",
+                url: "CurrencyConverterServlet",
+                data: {
+                    amount: amount,
+                    from: fromCurrency,
+                    to: toCurrency,
+                },
+                success: function (result) {
+                    document.getElementById("result").innerHTML =
+                        amount + " " + fromCurrency + " = " + result + " " + toCurrency;
+                },
+                error: function () {
+                    alert("Failed to convert currency.");
+                },
+            });
+        }
+    </script>
+</body>
+</html>
